@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    return Container(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children:[
@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
             decoration: BoxDecoration(
               color:Colors.green,
             ),
-            child: Text('Hi Container 1'),
+            child: Text('Home Screen'),
           ),
         ]
       )

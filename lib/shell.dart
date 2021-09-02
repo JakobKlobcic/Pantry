@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 import 'screens/Home.dart';
+import 'screens/Journals.dart';
 
-class Shell extends StatelessWidget {
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+class Shell extends StatefulWidget {
+  @override
+  _Shell createState() => _Shell();
+}
+class _Shell extends State<Shell> {
   int _selectedIndex = 0;
 
+  List<Widget> _widgetOptions = <Widget>[
+    Home(),
+    Journals(),
+  ];
+
   void _onItemTapped(int index) {
-    if(index == 0){
+    setState(() {
       _selectedIndex = index;
-      print('Home');
-    }else if(index == 1){
-      _selectedIndex = index;
-      print('All Journals');
-    }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title:Text('BYU Studies')),
-        body: Home(),
+        body: _widgetOptions.elementAt(_selectedIndex),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -38,3 +43,5 @@ class Shell extends StatelessWidget {
     );
   }
 }
+
+//Navigation from: https://medium.com/@theboringdeveloper/common-bottom-navigation-bar-flutter-e3693305d2d
