@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import '../fetch_data.dart';
 
 
 class Home extends StatelessWidget {
@@ -14,6 +17,17 @@ class Home extends StatelessWidget {
               color:Colors.green,
             ),
             child: Text('Home Screen'),
+          ),
+          ElevatedButton(
+            onPressed: () => {
+              /*Used to call database functions
+              //journal:44526
+              //article:37192
+              FetchData().fetchArticleList("44526").then((result) {
+                print(result);
+              })*/
+            },
+            child: new Text('Click me'),
           ),
         ]
       )
