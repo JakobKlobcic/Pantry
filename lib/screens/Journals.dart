@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../fetch_data.dart';
 import '../models/BasicJournal.dart';
+import './Articles.dart';
 
 
 class Journals extends StatelessWidget {
@@ -18,11 +20,10 @@ class Journals extends StatelessWidget {
   Widget journalListWidget() {
     return FutureBuilder(
       builder: (context, projectSnap) {
-        final data = nullCheck(projectSnap.data as List<BasicJournal>);
-        if (projectSnap.connectionState == ConnectionState.none &&
-            projectSnap.hasData == null) {
-          return Container();
+        if (projectSnap.connectionState == ConnectionState.waiting ) {
+          return Container(/*Add a progress indicator of some kind*/);
         }
+        final data = nullCheck(projectSnap.data as List<BasicJournal>);
         return Scaffold(
             body:OrientationBuilder(
               builder: (context, orientation){
@@ -35,7 +36,7 @@ class Journals extends StatelessWidget {
                  // padding: const EdgeInsets.all(5),
                   itemBuilder: (context, index) {
                     BasicJournal journal = data[index];
-                    return new InkResponse(child:listItem(journal), onTap: ()=>{onItemTap(journal)},);
+                    return new InkResponse(child:listItem(journal), onTap: ()=>{onItemTap(context, journal)},);
                   },
                 ));
               },
@@ -58,8 +59,12 @@ class Journals extends StatelessWidget {
     );
   }
 
-  void onItemTap(journal){
+  void onItemTap(context, journal){
     print(journal.title);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Articles()),
+    );
   }
 
   List<dynamic> nullCheck(Object list){
