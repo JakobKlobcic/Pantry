@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'models/BasicJournal.dart';
+import 'models/Journal.dart';
 
 class FetchData {
-  Future<List<BasicJournal>> fetchJournalList() async {
+  Future<List<Journal>> fetchJournalList() async {
     var url = Uri.parse(
         'https://byustudies.byu.edu/byu-app-connection/get_journal_list.php');
     http.Response response = await http.get(url);
     var data = jsonDecode(response.body);
 
-    List<BasicJournal> journals = [];
+    List<Journal> journals = [];
     data.forEach((singleJournal)=>{
-      journals.add(new BasicJournal(
+      journals.add(new Journal(
           id: singleJournal["id"],
           title: singleJournal["title"],
           image_id: singleJournal["image_id"],

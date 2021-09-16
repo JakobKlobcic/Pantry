@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../fetch_data.dart';
-import '../models/BasicJournal.dart';
+import '../models/Journal.dart';
 import './Articles.dart';
 
 
@@ -23,7 +23,7 @@ class Journals extends StatelessWidget {
         if (projectSnap.connectionState == ConnectionState.waiting ) {
           return Container(/*Add a progress indicator of some kind*/);
         }
-        final data = nullCheck(projectSnap.data as List<BasicJournal>);
+        final data = nullCheck(projectSnap.data as List<Journal>);
         return Scaffold(
             body:OrientationBuilder(
               builder: (context, orientation){
@@ -35,7 +35,7 @@ class Journals extends StatelessWidget {
 
                  // padding: const EdgeInsets.all(5),
                   itemBuilder: (context, index) {
-                    BasicJournal journal = data[index];
+                    Journal journal = data[index];
                     return new InkResponse(child:listItem(journal), onTap: ()=>{onItemTap(context, journal)},);
                   },
                 ));
@@ -47,7 +47,7 @@ class Journals extends StatelessWidget {
     );
   }
 
-  Widget listItem(BasicJournal journal){
+  Widget listItem(Journal journal){
     return GridTile(
       child: FittedBox(
           child:Image.network(journal.image_url),
