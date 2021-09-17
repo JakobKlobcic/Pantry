@@ -20,12 +20,12 @@ class Home extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () => {
-              /*Used to call database functions
+              /*Used to call database functions*/
               //journal:44526
               //article:37192
-              FetchData().fetchArticleList("44526").then((result) {
+              FetchData().fetchJournalList().then((result) {
                 print(result);
-              })*/
+              })
             },
             child: new Text('Click me'),
           ),

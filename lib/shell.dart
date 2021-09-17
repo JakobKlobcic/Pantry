@@ -7,7 +7,7 @@ class Shell extends StatefulWidget {
   _Shell createState() => _Shell();
 }
 class _Shell extends State<Shell> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   List<Widget> _widgetOptions = <Widget>[
     Home(),
