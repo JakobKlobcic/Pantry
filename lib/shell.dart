@@ -1,30 +1,49 @@
 import 'package:flutter/material.dart';
 import 'screens/Home.dart';
 import 'screens/Journals.dart';
+import 'screens/Articles.dart';
+import 'screens/ArticleDetail.dart';
 
 class Shell extends StatefulWidget {
   @override
   _Shell createState() => _Shell();
 }
 class _Shell extends State<Shell> {
-  int _selectedIndex = 1;
+  final _navigatorKey = GlobalKey<NavigatorState>();
+  int _selectedIndex = 0;
 
-  List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    Journals(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  List<String> _widgetOptions =["/","/journals"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title:Text('BYU Studies')),
-        body: _widgetOptions.elementAt(_selectedIndex),
+        body: Navigator(
+          initialRoute: '/',
+          key: _navigatorKey,
+          onGenerateRoute: (RouteSettings settings) {
+            print("onGenerateRoute");
+            WidgetBuilder builder;
+            switch (settings.name) {
+              case '/':
+                builder = (BuildContext context) =>  Home();
+                break;
+              case '/journals':
+                builder = (BuildContext context) => Journals();
+                break;
+              case '/articles':
+                builder = (BuildContext context) => Articles();
+                break;
+              case '/article_detail':
+                builder = (BuildContext context) => ArticleDetail();
+                break;
+
+              default:
+                throw Exception('Invalid route: ${settings.name}');
+            }
+            return MaterialPageRoute<void>(builder: builder, settings: settings);
+          },
+        ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -38,10 +57,16 @@ class _Shell extends State<Shell> {
           ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+        onTap: (int index){
+          print("onTap-bottomNavigation");
+          setState(() {
+            _selectedIndex = index;
+            _navigatorKey.currentState!.pushNamed(_widgetOptions[_selectedIndex]);
+          });
+          //Navigator.of(context).pushNamed('/journals');
+          //Navigator.of(context).pushReplacementNamed("/journals"/*_widgetOptions[_selectedIndex]*/);
+        },
       ),
     );
   }
 }
-
-//Navigation from: https://medium.com/@theboringdeveloper/common-bottom-navigation-bar-flutter-e3693305d2d

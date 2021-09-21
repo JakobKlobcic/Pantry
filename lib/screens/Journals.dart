@@ -6,8 +6,6 @@ import './Articles.dart';
 
 
 class Journals extends StatelessWidget {
-  final List<String> entries = <String>['A', 'B', 'C'];
-  final List<int> colorCodes = <int>[600, 500, 100];
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +59,7 @@ class Journals extends StatelessWidget {
 
   void onItemTap(context, journal){
     print(journal.title);
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Articles()),
-    );
+    Navigator.pushNamed(context, "/articles", arguments:journal); // with navigation
   }
 
   List<dynamic> nullCheck(Object list){
