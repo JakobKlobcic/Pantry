@@ -6,7 +6,11 @@ class ArticleDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     Article article = ModalRoute.of(context)!.settings.arguments as Article;
 
-    return Scaffold(body:Text(article.title));
+    return Scaffold(body: ElevatedButton(
+      onPressed: () => {
+      },
+      child: new Text(article.title),
+    ),);
   }
 
 }

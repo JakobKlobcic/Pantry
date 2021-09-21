@@ -1,17 +1,17 @@
 import 'Author.dart';
 class Article {
-  String id;
-  String title;
-  String subtitle;
-  String type;
-  List<Author> authorList;
+  var id;
+  var title;
+  var subtitle;
+  var type;
+  var authorList;
 
   Article({
-    required this.id,
-    required this.title,
-    required this.subtitle,
-    required this.type,
-    required this.authorList,
+    this.id,
+    this.title,
+    this.subtitle,
+    this.type,
+    this.authorList,
   });
 
 

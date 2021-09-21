@@ -22,7 +22,6 @@ class _Shell extends State<Shell> {
           initialRoute: '/',
           key: _navigatorKey,
           onGenerateRoute: (RouteSettings settings) {
-            print("onGenerateRoute");
             WidgetBuilder builder;
             switch (settings.name) {
               case '/':
@@ -32,9 +31,11 @@ class _Shell extends State<Shell> {
                 builder = (BuildContext context) => Journals();
                 break;
               case '/articles':
+                _selectedIndex=1;//makes sure Journal is the selected bottom navigation item
                 builder = (BuildContext context) => Articles();
                 break;
               case '/article_detail':
+                _selectedIndex=1;//makes sure Journal is the selected bottom navigation item
                 builder = (BuildContext context) => ArticleDetail();
                 break;
 
@@ -58,7 +59,6 @@ class _Shell extends State<Shell> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: (int index){
-          print("onTap-bottomNavigation");
           setState(() {
             _selectedIndex = index;
             _navigatorKey.currentState!.pushNamed(_widgetOptions[_selectedIndex]);
