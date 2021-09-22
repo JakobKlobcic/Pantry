@@ -86,14 +86,14 @@ class FetchData {
     }*/
   }
 
-  Future<dynamic> fetchArticleContent(var articleId) async {
+  Future<String> fetchArticleContent(var articleId) async {
     //the app already has the title, subtitle and authors
     var url = Uri.parse(
         'https://byustudies.byu.edu/byu-app-connection/get_article_details.php');
     http.Response response =
         await http.post(url, body: <String, String>{'articleId': articleId});
     var data = jsonDecode(response.body);
-    return data;
+    return data["content"];
     /*
     {
       content

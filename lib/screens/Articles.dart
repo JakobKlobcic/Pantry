@@ -25,25 +25,21 @@ class Articles extends StatelessWidget {
                 }
                 final data = projectSnap.data as List<Article>;
                 return Scaffold(
-                  body:OrientationBuilder(
-                    builder: (context, orientation){
-                      return Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child:ListView.builder(
-                          itemCount: data.length,
-                          itemBuilder: (context, index) {
-                            Article article = data[index];
-                            return new InkResponse(
-                              child:articleListItem(article),
-                              onTap: ()=>{
-                                print(article.title),
-                                Navigator.pushNamed(context, "/article_detail", arguments:article)
-                              },
-                            );
+                  body:Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child:ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        Article article = data[index];
+                        return new InkResponse(
+                          child:articleListItem(article),
+                          onTap: ()=>{
+                            print(article.title),
+                            Navigator.pushNamed(context, "/article_detail", arguments:article)
                           },
-                        )
-                      );
-                    },
+                        );
+                      },
+                    )
                   ),
                 );
               },
