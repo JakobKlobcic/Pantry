@@ -21,11 +21,12 @@ class Journals extends StatelessWidget {
         if (projectSnap.connectionState == ConnectionState.waiting ) {
           return Container(/*Add a progress indicator of some kind*/);
         }
-        final data = nullCheck(projectSnap.data as List<Journal>);
+        final data = projectSnap.data as List<Journal>;
         return Scaffold(
             body:OrientationBuilder(
               builder: (context, orientation){
-                return Padding(padding: EdgeInsets.only(bottom: 20.0, top: 20.0, left: 15.0, right: 15.0),child:GridView.builder(
+                return Padding(padding: EdgeInsets.only(bottom: 20.0, top: 20.0, left: 15.0, right: 15.0),child:
+                GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, crossAxisSpacing: 20, mainAxisSpacing: 15, childAspectRatio: 2/3
                   ),
@@ -58,17 +59,6 @@ class Journals extends StatelessWidget {
   }
 
   void onItemTap(context, journal){
-    print(journal.title);
     Navigator.pushNamed(context, "/articles", arguments:journal); // with navigation
-  }
-
-  List<dynamic> nullCheck(Object list){
-    if (list is List) {
-      if(list.isEmpty){
-        return [];
-      }
-      return list;
-    }
-    return [];
   }
 }
