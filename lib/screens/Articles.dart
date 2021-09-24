@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:byu_studies/Widgets/BaseAppBar.dart';
 import '../models/Journal.dart';
 import '../models/Article.dart';
 import '../fetch_data.dart';
 
+//todo: check article titled: "Dating the death of Jesus Christ" the table is to wide for the screen
 class Articles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Journal journal = ModalRoute.of(context)!.settings.arguments as Journal;
     return Scaffold(
+      appBar: BaseAppBar(context,true,journal.title),
       body:Column(
         children:[
           Text(journal.title),

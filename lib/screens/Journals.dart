@@ -1,8 +1,8 @@
+import 'package:byu_studies/Widgets/BaseAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../fetch_data.dart';
 import '../models/Journal.dart';
-import './Articles.dart';
 
 
 class Journals extends StatelessWidget {
@@ -11,6 +11,7 @@ class Journals extends StatelessWidget {
   Widget build(BuildContext context) {
     return(
         Scaffold(
+          appBar: BaseAppBar(context,false,"Journal"),
           body:journalListWidget()
         )
     );
@@ -25,19 +26,25 @@ class Journals extends StatelessWidget {
         return Scaffold(
             body:OrientationBuilder(
               builder: (context, orientation){
-                return Padding(padding: EdgeInsets.only(bottom: 20.0, top: 20.0, left: 15.0, right: 15.0),child:
-                GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, crossAxisSpacing: 20, mainAxisSpacing: 15, childAspectRatio: 2/3
-                  ),
-                  itemCount: data.length,
-
-                 // padding: const EdgeInsets.all(5),
-                  itemBuilder: (context, index) {
-                    Journal journal = data[index];
-                    return new InkResponse(child:listItem(journal), onTap: ()=>{onItemTap(context, journal)},);
-                  },
-                ));
+                return Padding(
+                  padding: EdgeInsets.only(bottom: 20.0, top: 20.0, left: 15.0, right: 15.0),
+                  child:
+                    GridView.builder(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 15,
+                          childAspectRatio: 2/3
+                      ),
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        Journal journal = data[index];
+                        return new InkResponse(
+                          child:listItem(journal),
+                          onTap: ()=>{onItemTap(context, journal)},);
+                      },
+                    )
+                );
               },
             ),
           );

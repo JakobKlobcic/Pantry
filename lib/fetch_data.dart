@@ -4,8 +4,10 @@ import 'dart:convert';
 import 'models/Journal.dart';
 import 'models/Article.dart';
 import 'models/Author.dart';
+import 'models/SearchResult.dart';
 
-
+//journal:44526
+//article:37192
 class FetchData {
   Future<List<Journal>> fetchJournalList() async {
     var url = Uri.parse(
@@ -33,11 +35,6 @@ class FetchData {
       ]
     }
     */
-    /*get data with this code
-      FetchData().fetchArticleDetails("37192").then((result) {
-        var data = result[0][id];
-      })
-     */
   }
 
   Future<List<Article>> fetchArticleList(var journalId) async {
@@ -99,10 +96,57 @@ class FetchData {
       content
     }
     */
-    /*gget data with this code
-      FetchData().fetchArticleDetails("37192").then((result) {
-        var data = result['content'];
-      })
-    */ //Look at design
+  }
+
+  Future<List<SearchResult>> fetchSearchResults(String searchEntry) async {
+    var url = Uri.parse(
+        'https://byustudies.byu.edu/byu-app-connection/get_search_results_list.php');
+    http.Response response =
+      await http.post(url, body: <String, String>{'searchString': searchEntry});
+    var data = jsonDecode(response.body);
+    List<SearchResult> results = [];
+    data.forEach((singleResult)=>{
+      results.add(new SearchResult(
+          id: singleResult["id"],
+          title: singleResult["title"],
+          type: singleResult["type"]
+        )
+      )
+    });
+    return results;
+    /*
+    {
+      [
+        id
+        title
+        type
+      ]
+    }
+    */
+  }
+
+  Future<Article> fetchSingleArticle(String articleId) async {
+    var url = Uri.parse(
+        'https://byustudies.byu.edu/byu-app-connection/get_single_article.php');
+    http.Response response =
+    await http.post(url, body: <String, String>{'articleId': articleId});
+    var data = jsonDecode(response.body);
+    Article article;
+    List<Author> authors = [];
+    data["authors"].forEach((author) {
+      authors.add(new Author(
+          id: author["id"],
+          name: author["name"]
+      ));
+    }
+    );
+    article = (new Article(
+      id: data["id"],
+      type: data["type"],
+      title: data["title"],
+      subtitle: data["subtitle"],
+      authorList: authors,
+    ));
+    return article;
   }
 }
