@@ -1,9 +1,11 @@
 class Author{
-  String id;
-  String name;
+  var id;
+  var name;
+  var articles;
 
   Author({
-    required this.id,
-    required this.name,
+    this.id,
+    this.name,
+    this.articles
   });
 }

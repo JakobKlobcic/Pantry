@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+//import 'package:flutter_html/flutter_html.dart';
+
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
   var higherContext;
   var backButtonBool;
@@ -12,6 +15,7 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(titleString),
+      //title: Html(data:titleString),
       leading: backButtonBool ? BackButton(onPressed: ()=>{Navigator.pop(context)}): Container(),
       actions: <Widget>[
         Padding(

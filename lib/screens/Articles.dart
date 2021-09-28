@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:byu_studies/Widgets/BaseAppBar.dart';
+import 'package:flutter_html/flutter_html.dart';
+
 import '../models/Journal.dart';
 import '../models/Article.dart';
 import '../fetch_data.dart';
 
-//todo: check article titled: "Dating the death of Jesus Christ" the table is to wide for the screen
+//todo: check article titled: "Dating the death of Jesus Christ" --> the table is to wide for the screen
 class Articles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -57,8 +59,8 @@ class Articles extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(5),
       child: ListTile(
-        title: Text(article.title),
-        subtitle: Text(article.subtitle != null ? article.subtitle:""),
+        title: Html(data:article.title),
+        subtitle: Html(data:article.subtitle != null ? article.subtitle:""),
         shape: RoundedRectangleBorder(
             side: BorderSide(color: Color.fromRGBO(0, 0, 0, 1), width: 0.5),
             borderRadius: BorderRadius.circular(5.0)

@@ -128,10 +128,9 @@ class FetchData {
   Future<Article> fetchSingleArticle(String articleId) async {
     var url = Uri.parse(
         'https://byustudies.byu.edu/byu-app-connection/get_single_article.php');
-    http.Response response =
-    await http.post(url, body: <String, String>{'articleId': articleId});
+    http.Response response =await http.post(url, body: <String, String>{'articleId': articleId});
     var data = jsonDecode(response.body);
-    Article article;
+    Article article;/*
     List<Author> authors = [];
     data["authors"].forEach((author) {
       authors.add(new Author(
@@ -139,14 +138,64 @@ class FetchData {
           name: author["name"]
       ));
     }
-    );
+    );*/
     article = (new Article(
       id: data["id"],
       type: data["type"],
       title: data["title"],
       subtitle: data["subtitle"],
-      authorList: authors,
+      authorList: data["authors"],
     ));
     return article;
   }
+
+  Future<Author> fetchAuthorDetails(String authorId) async {
+    var url = Uri.parse(
+        'https://byustudies.byu.edu/byu-app-connection/get_single_author.php');
+    http.Response response =await http.post(url, body: <String, String>{'authorId': authorId});
+    var data = jsonDecode(response.body);
+    //print(data);
+    List<Article> articles=[];
+    data["articles"].forEach((article){
+      Article theArticle =new Article(
+        id: article["id"],
+        type: article["type"],
+        title: article["title"],
+        subtitle: article["subtitle"],
+        authorList: article["authors"],
+      );
+      articles.add(theArticle);
+
+    });
+    Author author=new Author(
+      id: data["id"],
+      name: data["name"],
+      articles: articles,
+    );
+    return author;
+  }
+
+  Future<Journal> fetchSingleJournal(var journalId) async {
+    print("fetching journal");
+    var url = Uri.parse(
+        'https://byustudies.byu.edu/byu-app-connection/get_single_journal.php');
+    http.Response response = await http.post(url, body: <String, String>{'journalId': journalId});
+    var data = jsonDecode(response.body);
+    Journal journal= new Journal(
+      id: data["id"],
+      title: data["title"],
+      image_id: data["image_id"],
+      image_url: data["image_url"]
+    );
+    return journal;
+    /*Data Structure
+    {
+        id
+        title
+        image_id
+        image_url
+    }
+    */
+  }
+
 }

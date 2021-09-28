@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'screens/Home.dart';
 import 'screens/Journals.dart';
 import 'screens/Articles.dart';
-import 'screens/ArticleDetail.dart';
+import 'screens/ArticleDetails.dart';
 import 'screens/SearchResults.dart';
+import 'screens/AuthorDetails.dart';
 
 class Shell extends StatefulWidget {
   @override
@@ -39,18 +40,19 @@ class _Shell extends State<Shell> {
                 break;
               case '/articles':
                 back=true;
-                _selectedIndex=1;//makes sure Journal is the selected bottom navigation item
                 builder = (BuildContext context) => Articles();
                 break;
               case '/article_detail':
                 back=true;
-                _selectedIndex=1;//makes sure Journal is the selected bottom navigation item
                 builder = (BuildContext context) => ArticleDetail();
                 break;
               case '/search_results':
                 back=true;
-                _selectedIndex=1;//makes sure Journal is the selected bottom navigation item
                 builder = (BuildContext context) => SearchResults();
+                break;
+              case '/author_details':
+                back=true;
+                builder = (BuildContext context) => AuthorDetails();
                 break;
               default:
                 throw Exception('Invalid route: ${settings.name}');
