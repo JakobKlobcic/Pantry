@@ -13,7 +13,6 @@ class Shell extends StatefulWidget {
 class _Shell extends State<Shell> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   int _selectedIndex = 0;
-  //TODO:create a CustomAppBar(context, backButtonBool, titleString) and implement over app
   //first build gets set to false as soon as widget is built and stays false-- meant to prevent error when first building and setting a state TODO:should probably find a better solution
   var firstBuild = true;
 

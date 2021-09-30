@@ -170,6 +170,7 @@ class FetchData {
     Author author=new Author(
       id: data["id"],
       name: data["name"],
+      image_url: data["image_url"],
       articles: articles,
     );
     return author;

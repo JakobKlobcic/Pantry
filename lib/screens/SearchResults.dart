@@ -9,7 +9,7 @@ class SearchResults extends StatefulWidget{
   @override
   _SearchResults createState() => _SearchResults();
 }
-//TODO: add article journal to article item; (maybe)?->Add Image to author item
+//TODO: add article journal to article item;
 class _SearchResults extends State<SearchResults> {
   String enteredSearch ="";
   final TextEditingController _controller = new TextEditingController();
@@ -65,7 +65,7 @@ class _SearchResults extends State<SearchResults> {
             indent: 15,
             endIndent: 15,
           ),
-          Expanded(child:enteredSearch==""? Text ("Enter text"):
+          Expanded(child:enteredSearch==""? Text (""):
             FutureBuilder(
               builder: (context, projectSnap) {
                 if (projectSnap.connectionState == ConnectionState.waiting ) {
