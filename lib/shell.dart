@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'screens/Home.dart';
 import 'screens/Journals.dart';
 import 'screens/Articles.dart';
-import 'screens/ArticleDetail.dart';
+import 'screens/ArticleDetails.dart';
+import 'screens/SearchResults.dart';
+import 'screens/AuthorDetails.dart';
 
 class Shell extends StatefulWidget {
   @override
@@ -11,37 +13,55 @@ class Shell extends StatefulWidget {
 class _Shell extends State<Shell> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   int _selectedIndex = 0;
+  //first build gets set to false as soon as widget is built and stays false-- meant to prevent error when first building and setting a state TODO:should probably find a better solution
+  var firstBuild = true;
 
   List<String> _widgetOptions =["/","/journals"];
+  bool needsBackButton = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title:Text('BYU Studies')),
         body: Navigator(
           initialRoute: '/',
           key: _navigatorKey,
           onGenerateRoute: (RouteSettings settings) {
             WidgetBuilder builder;
+            var back=false;
             switch (settings.name) {
               case '/':
+                back=false;
                 builder = (BuildContext context) =>  Home();
                 break;
               case '/journals':
+                back=false;
                 builder = (BuildContext context) => Journals();
                 break;
               case '/articles':
-                _selectedIndex=1;//makes sure Journal is the selected bottom navigation item
+                back=true;
                 builder = (BuildContext context) => Articles();
                 break;
               case '/article_detail':
-                _selectedIndex=1;//makes sure Journal is the selected bottom navigation item
+                back=true;
                 builder = (BuildContext context) => ArticleDetail();
                 break;
-
+              case '/search_results':
+                back=true;
+                builder = (BuildContext context) => SearchResults();
+                break;
+              case '/author_details':
+                back=true;
+                builder = (BuildContext context) => AuthorDetails();
+                break;
               default:
                 throw Exception('Invalid route: ${settings.name}');
             }
+            if(!firstBuild){
+              setState(() {
+                needsBackButton=back;
+              });
+            }
+            firstBuild=false;
             return MaterialPageRoute<void>(builder: builder, settings: settings);
           },
         ),
@@ -68,5 +88,12 @@ class _Shell extends State<Shell> {
         },
       ),
     );
+  }
+  void makeBackButton(bool backButton){
+    setState(() {
+      needsBackButton=backButton;
+    });
+  }
+  void backButton(Function f){
   }
 }

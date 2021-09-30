@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:byu_studies/Widgets/BaseAppBar.dart';
 import 'package:flutter_html/flutter_html.dart';
 import '../models/Article.dart';
 import '../fetch_data.dart';
-import 'package:html/parser.dart' as htmlparser;
 import 'package:html/dom.dart' as dom;
 
 class ArticleDetail extends StatelessWidget {
@@ -14,6 +14,7 @@ class ArticleDetail extends StatelessWidget {
         .arguments as Article;
 
     return Scaffold(
+      appBar: BaseAppBar(context,true,article.title),
       body: Padding(
         padding: EdgeInsets.only(bottom: 20.0, top: 20.0, left: 15.0, right: 15.0),
         child:Column(
@@ -31,7 +32,7 @@ class ArticleDetail extends StatelessWidget {
                     child:Html(
                       data:data,
                       onLinkTap: (String? url, RenderContext context, Map<String, String> attributes, dom.Element? element) {
-                      //open URL in webview, or launch URL in browser, or any other logic here
+                        //open URL in webview, or launch URL in browser, or any other logic here
                       }
                     ),
                   );

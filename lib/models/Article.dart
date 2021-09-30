@@ -1,4 +1,3 @@
-import 'Author.dart';
 class Article {
   var id;
   var title;
