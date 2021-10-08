@@ -12,6 +12,4 @@ class Article {
     this.type,
     this.authorList,
   });
-
-
 }

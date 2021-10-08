@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -13,16 +15,25 @@ class FetchData {
     var url = Uri.parse(
         'https://byustudies.byu.edu/byu-app-connection/get_journal_list.php');
     http.Response response = await http.get(url);
-    var data = jsonDecode(response.body);
-
     List<Journal> journals = [];
-    data.forEach((singleJournal)=>{
-      journals.add(new Journal(
-          id: singleJournal["id"],
-          title: singleJournal["title"],
-          image_id: singleJournal["image_id"],
-          image_url: singleJournal["image_url"]))
-    });
+    try {
+      var data = jsonDecode(response.body);
+
+
+      data.forEach((singleJournal) =>{
+        journals.add(new Journal(
+            id: singleJournal["id"],
+            title: singleJournal["title"],
+            image_id: singleJournal["image_id"],
+            image_url: singleJournal["image_url"]))
+      });
+    }on SocketException{
+      print('No Internet connection');
+    }on TimeoutException {
+      print("the request is taking too long");
+    }on Exception catch(e){
+      print(e);
+    }
 
     return journals;
     /*Data Structure
@@ -198,5 +209,4 @@ class FetchData {
     }
     */
   }
-
 }
