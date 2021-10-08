@@ -20,7 +20,7 @@ class Journals extends StatelessWidget {
     return FutureBuilder(
       builder: (context, projectSnap) {
         if (projectSnap.connectionState == ConnectionState.waiting ) {
-          return Container(/*Add a progress indicator of some kind*/);
+          return new Center(child: new CircularProgressIndicator());
         }
         final data = projectSnap.data as List<Journal>;
         return Scaffold(
