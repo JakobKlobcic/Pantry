@@ -1,3 +1,4 @@
+import 'package:byu_studies/screens/Browse.dart';
 import 'package:flutter/material.dart';
 import 'screens/Home.dart';
 import 'screens/Journals.dart';
@@ -16,7 +17,7 @@ class _Shell extends State<Shell> {
   //first build gets set to false as soon as widget is built and stays false-- meant to prevent error when first building and setting a state TODO:should probably find a better solution
   var firstBuild = true;
 
-  List<String> _widgetOptions =["/","/journals"];
+  List<String> _widgetOptions =["/","/journals","/browse"];
   bool needsBackButton = false;
 
   @override
@@ -36,6 +37,10 @@ class _Shell extends State<Shell> {
               case '/journals':
                 back=false;
                 builder = (BuildContext context) => Journals();
+                break;
+              case '/browse':
+                back=false;
+                builder = (BuildContext context) =>  Browse();
                 break;
               case '/articles':
                 back=true;
@@ -75,14 +80,24 @@ class _Shell extends State<Shell> {
               icon: Icon(Icons.book),
               label: 'All Journals',
             ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.manage_search),
+              label: 'Browse',
+            ),
           ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: (int index){
-          setState(() {
-            _selectedIndex = index;
-            _navigatorKey.currentState!.pushNamed(_widgetOptions[_selectedIndex]);
-          });
+          if(index!=_selectedIndex) {
+            setState(() {
+              print(index.toString() + _selectedIndex.toString());
+
+              _selectedIndex = index;
+              _navigatorKey.currentState!.pushNamed(
+                  _widgetOptions[_selectedIndex]
+              );
+            });
+          }
           //Navigator.of(context).pushNamed('/journals');
           //Navigator.of(context).pushReplacementNamed("/journals"/*_widgetOptions[_selectedIndex]*/);
         },

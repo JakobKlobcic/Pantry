@@ -1,3 +1,4 @@
+import 'package:byu_studies/widgets/ArticleListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:byu_studies/Widgets/BaseAppBar.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -58,7 +59,7 @@ class AuthorDetails extends StatelessWidget {
                     itemBuilder: (context, index) {
                       Article article = articles[index];
                       return new InkResponse(
-                        child:articleListItem(article),
+                        child:ArticleListItem(article,true),
                         onTap: ()=>{
                           print(article.title),
                           Navigator.pushNamed(context, "/article_detail", arguments:article)
@@ -72,18 +73,5 @@ class AuthorDetails extends StatelessWidget {
           future: FetchData().fetchAuthorDetails(author.id),
         )
       );
-  }
-  Widget articleListItem(Article article){
-    return Padding(
-        padding: EdgeInsets.all(5),
-        child: ListTile(
-          title: Html(data:article.title),
-          subtitle: Html(data:article.subtitle != null ? article.subtitle:""),
-          shape: RoundedRectangleBorder(
-              side: BorderSide(color: Color.fromRGBO(0, 0, 0, 1), width: 0.5),
-              borderRadius: BorderRadius.circular(5.0)
-          ),
-        )
-    );
   }
 }

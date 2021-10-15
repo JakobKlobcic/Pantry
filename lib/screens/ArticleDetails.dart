@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:byu_studies/Widgets/BaseAppBar.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import '../models/Article.dart';
-import '../fetch_data.dart';
 import 'package:html/dom.dart' as dom;
+
+import '../fetch_data.dart';
+import '../models/Article.dart';
 
 class ArticleDetail extends StatelessWidget {
   @override
@@ -16,7 +17,7 @@ class ArticleDetail extends StatelessWidget {
     return Scaffold(
       appBar: BaseAppBar(context,true,article.title),
       body: Padding(
-        padding: EdgeInsets.only(bottom: 20.0, top: 20.0, left: 15.0, right: 15.0),
+        padding: EdgeInsets.only(bottom: 2.0, top: 2.0, left: 15.0, right: 15.0),
         child:Column(
           children: [
             Expanded(
@@ -27,13 +28,24 @@ class ArticleDetail extends StatelessWidget {
                     return Container(/*Add a progress indicator of some kind*/);
                   }
                   String data = projectSnap.data.toString();
+                  String articleContent;
+                  if(article.content==null || article.content.isEmpty || article.content==""){
+                    articleContent=data;
+                  }else{
+                    articleContent=article.content;
+                  }
                   return SingleChildScrollView(
                     scrollDirection: Axis.vertical,
-                    child:Html(
-                      data:data,
-                      onLinkTap: (String? url, RenderContext context, Map<String, String> attributes, dom.Element? element) {
-                        //open URL in webview, or launch URL in browser, or any other logic here
-                      }
+                    child:Column(
+                      children: [
+                        Html(data:article.title),
+                        Html(
+                          data:articleContent,
+                          onLinkTap: (String? url, RenderContext context, Map<String, String> attributes, dom.Element? element) {
+                            //open URL in webview, or launch URL in browser, or any other logic here
+                          }
+                        ),
+                      ],
                     ),
                   );
                 },
