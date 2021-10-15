@@ -10,7 +10,7 @@ class Browse extends StatefulWidget{
 }
 class _Browse extends State<Browse> {
   String enteredSearch ="";
-  final TextEditingController _controller = new TextEditingController();
+  //final TextEditingController _controller = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
