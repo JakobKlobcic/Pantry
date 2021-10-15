@@ -1,6 +1,6 @@
+import 'package:byu_studies/widgets/ArticleListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:byu_studies/Widgets/BaseAppBar.dart';
-import 'package:flutter_html/flutter_html.dart';
 
 import '../models/Journal.dart';
 import '../models/Article.dart';
@@ -26,7 +26,7 @@ class Articles extends StatelessWidget {
             FutureBuilder(
               builder: (context, projectSnap) {
                 if (projectSnap.connectionState == ConnectionState.waiting ) {
-                  return Container(/*Add a progress indicator of some kind*/);
+                  return Center(child: new CircularProgressIndicator());
                 }
                 final data = projectSnap.data as List<Article>;
                 return Scaffold(
@@ -37,7 +37,7 @@ class Articles extends StatelessWidget {
                       itemBuilder: (context, index) {
                         Article article = data[index];
                         return new InkResponse(
-                          child:articleListItem(article),
+                          child:ArticleListItem(article, true),
                           onTap: ()=>{
                             print(article.title),
                             Navigator.pushNamed(context, "/article_detail", arguments:article)
@@ -52,19 +52,6 @@ class Articles extends StatelessWidget {
             )
           )
         ]
-      )
-    );
-  }
-  Widget articleListItem(Article article){
-    return Padding(
-      padding: EdgeInsets.all(5),
-      child: ListTile(
-        title: Html(data:article.title),
-        subtitle: Html(data:article.subtitle != null ? article.subtitle:""),
-        shape: RoundedRectangleBorder(
-            side: BorderSide(color: Color.fromRGBO(0, 0, 0, 1), width: 0.5),
-            borderRadius: BorderRadius.circular(5.0)
-        ),
       )
     );
   }

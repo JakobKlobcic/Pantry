@@ -76,6 +76,7 @@ class FetchData {
           title: singleArticle["title"],
           subtitle: singleArticle["subtitle"],
           authorList: authors,
+          articleJournal: singleArticle['articleJournal']
       )),
     });
     return articles;
@@ -156,6 +157,8 @@ class FetchData {
       title: data["title"],
       subtitle: data["subtitle"],
       authorList: data["authors"],
+      articleJournal: data['articleJournal']
+
     ));
     return article;
   }
@@ -174,6 +177,8 @@ class FetchData {
         title: article["title"],
         subtitle: article["subtitle"],
         authorList: article["authors"],
+        articleJournal: article['articleJournal']
+
       );
       articles.add(theArticle);
 

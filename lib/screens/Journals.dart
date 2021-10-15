@@ -23,6 +23,7 @@ class Journals extends StatelessWidget {
           return new Center(child: new CircularProgressIndicator());
         }
         final data = projectSnap.data as List<Journal>;
+
         return Scaffold(
             body:OrientationBuilder(
               builder: (context, orientation){

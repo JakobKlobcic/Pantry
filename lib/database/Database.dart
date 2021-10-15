@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:byu_studies/database/db_models/LocalArticle.dart';
+import 'package:byu_studies/models/Article.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
@@ -31,7 +31,8 @@ class DBProvider{
             subtitle TEXT,
             type TEXT,
             authorList TEXT,
-            articleJournal INTEGER
+            articleJournal INTEGER,
+            content TEXT
           )
           '''
         );
@@ -40,14 +41,16 @@ class DBProvider{
     );
   }
 
-  newArticle(LocalArticle article) async{
+
+
+  newArticle(Article article) async{
     final db =await database;
 
     var res = await db.rawInsert(
       '''
       INSERT INTO articles(
-        id, title, subtitle, type, authorList, articleJournal
-      )values(?,?,?,?,?,?)
+        id, title, subtitle, type, authorList, articleJournal, content
+      )values(?,?,?,?,?,?,?)
       ''',
       article.toList()
     );
@@ -61,21 +64,22 @@ class DBProvider{
     print(res);
   }
 
-  Future <List<LocalArticle>> getArticle() async{
+  Future <List<Article>> getArticle() async{
     final db = await database;
     var res = await db.query('articles');
-    List<LocalArticle> articles =[];
+    List<Article> articles =[];
     if(res.length==0){
       return articles;
     }else{
       res.forEach((article)=>{
-        articles.add(new LocalArticle(
+        articles.add(new Article(
           id: article["id"],
           title: article["title"],
           subtitle: article["subtitle"],
           type: article["type"],
           authorList: article["authorList"],
           articleJournal: article["articleJournal"],
+          content: article["content"]
         ))
       });
       return articles;
