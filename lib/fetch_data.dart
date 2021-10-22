@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'models/Journal.dart';
 import 'models/Article.dart';
 import 'models/Author.dart';
 import 'models/SearchResult.dart';
+import 'models/Tag.dart';
 
 //journal:44526
 //article:37192
@@ -178,7 +178,6 @@ class FetchData {
         subtitle: article["subtitle"],
         authorList: article["authors"],
         articleJournal: article['articleJournal']
-
       );
       articles.add(theArticle);
 
@@ -193,7 +192,6 @@ class FetchData {
   }
 
   Future<Journal> fetchSingleJournal(var journalId) async {
-    print("fetching journal");
     var url = Uri.parse(
         'https://byustudies.byu.edu/byu-app-connection/get_single_journal.php');
     http.Response response = await http.post(url, body: <String, String>{'journalId': journalId});
@@ -213,5 +211,39 @@ class FetchData {
         image_url
     }
     */
+  }
+
+  Future<List<Tag>> fetchTags(String searchEntry) async{
+    var url = Uri.parse(
+        'https://byustudies.byu.edu/byu-app-connection/get_tags_list.php');
+    http.Response response = await http.post(url, body: <String, String>{'searchString': searchEntry});
+    var data = jsonDecode(response.body);
+    List<Tag> tagList =[];
+    data.forEach((tag){
+      tagList.add(new Tag(
+        id:tag["id"],
+        name:tag["name"]
+      ));
+    });
+    return tagList;
+  }
+
+  Future<List<Article>> fetchTagArticles(String tagId) async{
+    var url = Uri.parse(
+        'https://byustudies.byu.edu/byu-app-connection/get_tag_articles.php');
+    http.Response response = await http.post(url, body: <String, String>{'tagId': tagId});
+    var data = jsonDecode(response.body);
+    List<Article> tagArticleList =[];
+    data.forEach((article){
+      tagArticleList.add(new Article(
+        id: article["id"],
+        type: article["type"],
+        title: article["title"],
+        subtitle: article["subtitle"],
+        authorList: article["authors"],
+        articleJournal: article['articleJournal']
+      ));
+    });
+    return tagArticleList;
   }
 }

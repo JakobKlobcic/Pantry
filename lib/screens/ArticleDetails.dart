@@ -25,7 +25,7 @@ class ArticleDetail extends StatelessWidget {
               child:FutureBuilder(
                 builder: (context, projectSnap) {
                   if (projectSnap.connectionState == ConnectionState.waiting) {
-                    return Container(/*Add a progress indicator of some kind*/);
+                    return Center(child: new CircularProgressIndicator());
                   }
                   String data = projectSnap.data.toString();
                   String articleContent;
