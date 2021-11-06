@@ -1,4 +1,5 @@
 import 'package:byu_studies/Widgets/BaseAppBar.dart';
+import 'package:byu_studies/models/RouteArguments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../fetch_data.dart';
@@ -67,6 +68,6 @@ class Journals extends StatelessWidget {
   }
 
   void onItemTap(context, journal){
-    Navigator.pushNamed(context, "/articles", arguments:journal); // with navigation
+    Navigator.pushNamed(context, "/articles", arguments: Arguments(data:journal)); // with navigation
   }
 }

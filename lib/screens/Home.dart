@@ -20,7 +20,7 @@ class Home extends StatelessWidget {
             ),
             child: Text('Home Screen'),
           ),
-          ElevatedButton(
+          Center(child:ElevatedButton(
             onPressed: () => {
               /*DBProvider.db.newArticle(new LocalArticle(
                 id: 37192,
@@ -38,7 +38,7 @@ class Home extends StatelessWidget {
               })*/
             },
             child: new Text('Click me'),
-          ),
+          )),
         ]
       )
     );

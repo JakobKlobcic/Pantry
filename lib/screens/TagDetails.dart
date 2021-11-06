@@ -1,3 +1,4 @@
+import 'package:byu_studies/models/RouteArguments.dart';
 import 'package:byu_studies/models/Tag.dart';
 import 'package:byu_studies/widgets/ArticleListItem.dart';
 import 'package:flutter/material.dart';
@@ -7,17 +8,20 @@ import 'package:flutter_html/flutter_html.dart';
 import '../models/Author.dart';
 import '../models/Article.dart';
 import '../fetch_data.dart';
+import 'ArticleDetails.dart';
 
 class TagDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Tag tag = ModalRoute.of(context)!.settings.arguments as Tag;
+    var args = ModalRoute.of(context)!.settings.arguments as Arguments;
+    Tag tag = args.data as Tag;
+    var mainNavKey = args.key;
     return Scaffold(
       appBar: BaseAppBar(context,true,tag.name),
       body:FutureBuilder(
         builder: (context, projectSnap) {
           if (projectSnap.connectionState == ConnectionState.waiting ) {
-            return Container(/*Add a progress indicator of some kind*/);
+            return Center(child: new CircularProgressIndicator());
           }
           final articles = projectSnap.data as List<Article>;
           //final articles = data.articles as List<Article>;
@@ -54,8 +58,8 @@ class TagDetails extends StatelessWidget {
                     return new InkResponse(
                       child:ArticleListItem(article,true),
                       onTap: (){
-                        print(article.title);
-                        Navigator.of(context, rootNavigator: true).pushNamed("/article_detail", arguments:article);
+                        print(Navigator.of(context, rootNavigator: true).toString());
+                        mainNavKey.currentState!.pushNamed("/article_detail", arguments: Arguments(data:article));
                       },
                     );},
                 )

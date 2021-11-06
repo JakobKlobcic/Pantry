@@ -1,13 +1,14 @@
+import 'package:byu_studies/fetch_data.dart';
+import 'package:byu_studies/models/RouteArguments.dart';
 import 'package:byu_studies/models/Tag.dart';
 import 'package:byu_studies/widgets/TagListItem.dart';
 import 'package:flutter/material.dart';
-import 'package:byu_studies/Widgets/BaseAppBar.dart';
-
-import '../fetch_data.dart';
 
 class BrowseTags extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Arguments args = ModalRoute.of(context)!.settings.arguments as Arguments;
+    var mainNavKey=args.key;
     return Scaffold(
         body: Column(
             children:[
@@ -28,7 +29,7 @@ class BrowseTags extends StatelessWidget {
                             return new InkResponse(
                               child:TagListItem(tag),
                               onTap: ()=>{
-                                Navigator.pushNamed(context, '/browse/tag_details', arguments:tag)
+                                args.key.currentState!.pushNamed('/tag_details', arguments:new Arguments(key:mainNavKey, data:tag))
                               },
                             );
                           },
@@ -36,7 +37,7 @@ class BrowseTags extends StatelessWidget {
                     ),
                   );
                 },
-                future: FetchData().fetchTags(""),
+                future: FetchData().fetchTagList(""),
               )
               )
             ]

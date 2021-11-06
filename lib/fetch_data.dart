@@ -11,6 +11,8 @@ import 'models/Tag.dart';
 //journal:44526
 //article:37192
 class FetchData {
+
+  //Journal---------------------------------------------------------------------
   Future<List<Journal>> fetchJournalList() async {
     var url = Uri.parse(
         'https://byustudies.byu.edu/byu-app-connection/get_journal_list.php');
@@ -18,7 +20,7 @@ class FetchData {
     List<Journal> journals = [];
     try {
       var data = jsonDecode(response.body);
-
+      //print(data);
 
       data.forEach((singleJournal) =>{
         journals.add(new Journal(
@@ -48,6 +50,29 @@ class FetchData {
     */
   }
 
+  Future<Journal> fetchSingleJournal(var journalId) async {
+    var url = Uri.parse(
+        'https://byustudies.byu.edu/byu-app-connection/get_single_journal.php');
+    http.Response response = await http.post(url, body: <String, String>{'journalId': journalId});
+    var data = jsonDecode(response.body);
+    Journal journal= new Journal(
+        id: data["id"],
+        title: data["title"],
+        image_id: data["image_id"],
+        image_url: data["image_url"]
+    );
+    return journal;
+    /*Data Structure
+    {
+        id
+        title
+        image_id
+        image_url
+    }
+    */
+  }
+
+  //Article---------------------------------------------------------------------
   Future<List<Article>> fetchArticleList(var journalId) async {
     // take journalId and get al articles associated with it.
     var url = Uri.parse(
@@ -100,39 +125,12 @@ class FetchData {
     var url = Uri.parse(
         'https://byustudies.byu.edu/byu-app-connection/get_article_details.php');
     http.Response response =
-        await http.post(url, body: <String, String>{'articleId': articleId});
+    await http.post(url, body: <String, String>{'articleId': articleId});
     var data = jsonDecode(response.body);
     return data["content"];
     /*
     {
       content
-    }
-    */
-  }
-
-  Future<List<SearchResult>> fetchSearchResults(String searchEntry) async {
-    var url = Uri.parse(
-        'https://byustudies.byu.edu/byu-app-connection/get_search_results_list.php');
-    http.Response response =
-      await http.post(url, body: <String, String>{'searchString': searchEntry});
-    var data = jsonDecode(response.body);
-    List<SearchResult> results = [];
-    data.forEach((singleResult)=>{
-      results.add(new SearchResult(
-          id: singleResult["id"],
-          title: singleResult["title"],
-          type: singleResult["type"]
-        )
-      )
-    });
-    return results;
-    /*
-    {
-      [
-        id
-        title
-        type
-      ]
     }
     */
   }
@@ -152,68 +150,19 @@ class FetchData {
     }
     );*/
     article = (new Article(
-      id: data["id"],
-      type: data["type"],
-      title: data["title"],
-      subtitle: data["subtitle"],
-      authorList: data["authors"],
-      articleJournal: data['articleJournal']
+        id: data["id"],
+        type: data["type"],
+        title: data["title"],
+        subtitle: data["subtitle"],
+        authorList: data["authors"],
+        articleJournal: data['articleJournal']
 
     ));
     return article;
   }
 
-  Future<Author> fetchAuthorDetails(String authorId) async {
-    var url = Uri.parse(
-        'https://byustudies.byu.edu/byu-app-connection/get_single_author.php');
-    http.Response response =await http.post(url, body: <String, String>{'authorId': authorId});
-    var data = jsonDecode(response.body);
-    //print(data);
-    List<Article> articles=[];
-    data["articles"].forEach((article){
-      Article theArticle =new Article(
-        id: article["id"],
-        type: article["type"],
-        title: article["title"],
-        subtitle: article["subtitle"],
-        authorList: article["authors"],
-        articleJournal: article['articleJournal']
-      );
-      articles.add(theArticle);
-
-    });
-    Author author=new Author(
-      id: data["id"],
-      name: data["name"],
-      image_url: data["image_url"],
-      articles: articles,
-    );
-    return author;
-  }
-
-  Future<Journal> fetchSingleJournal(var journalId) async {
-    var url = Uri.parse(
-        'https://byustudies.byu.edu/byu-app-connection/get_single_journal.php');
-    http.Response response = await http.post(url, body: <String, String>{'journalId': journalId});
-    var data = jsonDecode(response.body);
-    Journal journal= new Journal(
-      id: data["id"],
-      title: data["title"],
-      image_id: data["image_id"],
-      image_url: data["image_url"]
-    );
-    return journal;
-    /*Data Structure
-    {
-        id
-        title
-        image_id
-        image_url
-    }
-    */
-  }
-
-  Future<List<Tag>> fetchTags(String searchEntry) async{
+  //Tag-------------------------------------------------------------------------
+  Future<List<Tag>> fetchTagList(String searchEntry) async{
     var url = Uri.parse(
         'https://byustudies.byu.edu/byu-app-connection/get_tags_list.php');
     http.Response response = await http.post(url, body: <String, String>{'searchString': searchEntry});
@@ -221,8 +170,8 @@ class FetchData {
     List<Tag> tagList =[];
     data.forEach((tag){
       tagList.add(new Tag(
-        id:tag["id"],
-        name:tag["name"]
+          id:tag["id"],
+          name:tag["name"]
       ));
     });
     return tagList;
@@ -236,14 +185,94 @@ class FetchData {
     List<Article> tagArticleList =[];
     data.forEach((article){
       tagArticleList.add(new Article(
-        id: article["id"],
-        type: article["type"],
-        title: article["title"],
-        subtitle: article["subtitle"],
-        authorList: article["authors"],
-        articleJournal: article['articleJournal']
+          id: article["id"],
+          type: article["type"],
+          title: article["title"],
+          subtitle: article["subtitle"],
+          authorList: article["authors"],
+          articleJournal: article['articleJournal']
       ));
     });
     return tagArticleList;
   }
+
+  //Search Result---------------------------------------------------------------
+  Future<List<SearchResult>> fetchSearchResultsList(String searchEntry) async {
+    var url = Uri.parse(
+        'https://byustudies.byu.edu/byu-app-connection/get_search_results_list.php');
+    http.Response response =
+    await http.post(url, body: <String, String>{'searchString': searchEntry});
+    var data = jsonDecode(response.body);
+    List<SearchResult> results = [];
+    data.forEach((singleResult)=>{
+      results.add(new SearchResult(
+          id: singleResult["id"],
+          title: singleResult["title"],
+          type: singleResult["type"]
+      )
+      )
+    });
+    return results;
+    /*
+    {
+      [
+        id
+        title
+        type
+      ]
+    }
+    */
+  }
+
+  //Author----------------------------------------------------------------------
+  Future<List<Author>> fetchAuthorList(var searchString) async{
+    var url = Uri.parse(
+        'https://byustudies.byu.edu/byu-app-connection/get_authors_list.php');
+    http.Response response =
+    await http.post(url, body: <String, String>{'searchString': searchString});
+    var data = jsonDecode(response.body);
+
+    List<Author> authorList = [];
+    data.forEach((author){
+      authorList.add(new Author(
+          id: author["id"],
+          name: author["name"],
+          image_url: author["image_url"]
+      ));
+    });
+
+    return authorList;
+  }
+
+  Future<Author> fetchAuthorDetails(String authorId) async {
+    var url = Uri.parse(
+        'https://byustudies.byu.edu/byu-app-connection/get_single_author.php');
+    http.Response response =await http.post(url, body: <String, String>{'authorId': authorId});
+    var data = jsonDecode(response.body);
+    //print(data);
+    List<Article> articles=[];
+    data["articles"].forEach((article){
+      if(article["title"]!=null) {
+        articles.add(new Article(
+            id: article["id"],
+            type: article["type"],
+            title: article["title"],
+            subtitle: article["subtitle"],
+            authorList: article["authors"],
+            articleJournal: article['articleJournal']
+        ));
+      }
+    });
+    Author author=new Author(
+      id: data["id"],
+      name: data["name"],
+      image_url: data["image_url"],
+      articles: articles,
+    );
+    return author;
+  }
+
+
+
+
 }

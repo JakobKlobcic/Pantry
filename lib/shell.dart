@@ -1,4 +1,6 @@
+import 'package:byu_studies/models/RouteArguments.dart';
 import 'package:byu_studies/screens/Browse.dart';
+import 'package:byu_studies/screens/TagDetails.dart';
 import 'package:flutter/material.dart';
 import 'screens/Home.dart';
 import 'screens/Journals.dart';
@@ -48,7 +50,7 @@ class _Shell extends State<Shell> {
               break;
             case '/article_detail':
               back=true;
-              builder = (BuildContext context) => ArticleDetail();
+              builder = (BuildContext context) => ArticleDetails();
               break;
             case '/search_results':
               back=true;
@@ -57,6 +59,10 @@ class _Shell extends State<Shell> {
             case '/author_details':
               back=true;
               builder = (BuildContext context) => AuthorDetails();
+              break;
+            case '/tag_details':
+              back=true;
+              builder = (BuildContext context) => TagDetails();
               break;
             default:
               throw Exception('Invalid route: ${settings.name}');
@@ -92,7 +98,7 @@ class _Shell extends State<Shell> {
             setState(() {
               _selectedIndex = index;
               _navigatorKey.currentState!.pushNamed(
-                  _widgetOptions[_selectedIndex]
+                  _widgetOptions[_selectedIndex], arguments: new Arguments(key:_navigatorKey)
               );
             });
           }

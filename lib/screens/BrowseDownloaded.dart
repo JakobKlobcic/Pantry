@@ -1,5 +1,6 @@
 import 'package:byu_studies/database/Database.dart';
 import 'package:byu_studies/models/Article.dart';
+import 'package:byu_studies/models/RouteArguments.dart';
 import 'package:byu_studies/widgets/ArticleListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:byu_studies/Widgets/BaseAppBar.dart';
@@ -7,6 +8,11 @@ import 'package:byu_studies/Widgets/BaseAppBar.dart';
 class BrowseDownloaded extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var mainNavKey;
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+    Arguments args = ModalRoute.of(context)!.settings.arguments as Arguments;
+    mainNavKey = args.key;
+    }
     return Scaffold(
       body: Column(children: [
         /*TextField(
@@ -48,7 +54,7 @@ class BrowseDownloaded extends StatelessWidget {
                       return new InkResponse(
                         child:ArticleListItem(article, false),
                         onTap: (){
-                          Navigator.of(context, rootNavigator: true).pushNamed("/article_detail", arguments:article);
+                          mainNavKey.currentState!.pushNamed("/article_detail", arguments: new Arguments(data:article));
                         },
                       );
                     },
