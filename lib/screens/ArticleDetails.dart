@@ -1,4 +1,5 @@
 import 'package:byu_studies/Widgets/BaseAppBar.dart';
+import 'package:byu_studies/models/RouteArguments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:html/dom.dart' as dom;
@@ -6,14 +7,11 @@ import 'package:html/dom.dart' as dom;
 import '../fetch_data.dart';
 import '../models/Article.dart';
 
-class ArticleDetail extends StatelessWidget {
+class ArticleDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Article article = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as Article;
-
+    Arguments args = ModalRoute.of(context)!.settings.arguments as Arguments;
+    Article article = args.data as Article;
     return Scaffold(
       appBar: BaseAppBar(context,true,article.title),
       body: Padding(

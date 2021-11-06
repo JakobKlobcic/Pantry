@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 //import 'package:flutter_html/flutter_html.dart';
-
+//TODO: make stateful widget to change backbutton
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
-  var higherContext;
-  var backButtonBool;
-  var titleString;
+  late final higherContext;
+  late final backButtonBool;
+  late final titleString;
   BaseAppBar(var higherContext, var backButtonBool, var titleString){
     this.higherContext=higherContext;
     this.backButtonBool=backButtonBool;

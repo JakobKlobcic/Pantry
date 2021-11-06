@@ -1,3 +1,4 @@
+import 'package:byu_studies/models/RouteArguments.dart';
 import 'package:byu_studies/screens/ArticleDetails.dart';
 import 'package:byu_studies/screens/AuthorDetails.dart';
 import 'package:byu_studies/screens/BrowseAuthors.dart';
@@ -12,40 +13,40 @@ class Browse extends StatefulWidget{
   _Browse createState() => _Browse();
 }
 
-class _Browse extends State<Browse> with SingleTickerProviderStateMixin {
+class _Browse extends State<Browse> with TickerProviderStateMixin {
   final _subNavigatorKey = GlobalKey<NavigatorState>();
   String enteredSearch ="";
-  bool s = true;
+  int index = 0;
   late final TabController _tabController;
-
-
+  //late final TabController _tabController;
   //final TextEditingController _controller = new TextEditingController();
   @override
   void initState() {
-
-    /*_tabController.addListener(() {
-      if (!_tabController.indexIsChanging) {
-        print("change tab");
-        _handleTabSelection();
-      }
-    });*/
+    _tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    _tabController = TabController(length: 3, vsync: this);
+    Arguments args = ModalRoute.of(context)!.settings.arguments as Arguments;
+    print(args.key);
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
         switch(_tabController.index){
           case 0:
-            _subNavigatorKey.currentState!.pushNamed("/browse/downloaded");
+            setState(() {
+              _subNavigatorKey.currentState!.pushNamed("/browse/downloaded", arguments: args);
+            });
             break;
           case 1:
-            _subNavigatorKey.currentState!.pushNamed("/browse/tags");
+            setState(() {
+              _subNavigatorKey.currentState!.pushNamed("/browse/tags", arguments: args);
+            });
             break;
           case 2:
-            _subNavigatorKey.currentState!.pushNamed("/browse/authors");
+            setState(() {
+              _subNavigatorKey.currentState!.pushNamed("/browse/authors", arguments: args);
+            });
             break;
         }
       }
@@ -65,8 +66,7 @@ class _Browse extends State<Browse> with SingleTickerProviderStateMixin {
           title: const Text('Browse'),
           leading: Container(),
         ),
-        body: s?
-        Navigator(
+        body: Navigator(
           initialRoute: '/',
           key: _subNavigatorKey,
           onGenerateRoute: (RouteSettings settings) {
@@ -82,9 +82,6 @@ class _Browse extends State<Browse> with SingleTickerProviderStateMixin {
               case '/browse/authors':
                 builder = (BuildContext context) =>  BrowseAuthors();
                 break;
-              case '/browse/downloaded_details':
-                builder = (BuildContext context) =>  ArticleDetail();
-                break;
               case '/browse/tag_details':
                 builder = (BuildContext context) =>  TagDetails();
                 break;
@@ -93,21 +90,9 @@ class _Browse extends State<Browse> with SingleTickerProviderStateMixin {
                 break;
               default:
                 throw Exception('Invalid route: ${settings.name}');
-            }/*
-            if(!firstBuild){
-              setState(() {
-                needsBackButton=back;
-              });
             }
-            firstBuild=false;*/
-            return MaterialPageRoute<void>(builder: builder, settings: settings);
+            return MaterialPageRoute<void>(builder: builder, settings: new RouteSettings(name:settings.name, arguments: args));
           },
-        ):TabBarView(
-          children: [
-            BrowseDownloaded(),
-            BrowseTags(),
-            BrowseAuthors(),
-          ],
         ),
       ),
     );
