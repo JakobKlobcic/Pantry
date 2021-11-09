@@ -1,5 +1,4 @@
 import 'package:byu_studies/models/RouteArguments.dart';
-import 'package:byu_studies/screens/ArticleDetails.dart';
 import 'package:byu_studies/screens/AuthorDetails.dart';
 import 'package:byu_studies/screens/BrowseAuthors.dart';
 import 'package:byu_studies/screens/BrowseTags.dart';
@@ -29,7 +28,7 @@ class _Browse extends State<Browse> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     Arguments args = ModalRoute.of(context)!.settings.arguments as Arguments;
-    print(args.key);
+    //print(args.key);
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
         switch(_tabController.index){
@@ -64,7 +63,7 @@ class _Browse extends State<Browse> with TickerProviderStateMixin {
             ],
           ),
           title: const Text('Browse'),
-          leading: Container(),
+          automaticallyImplyLeading: false,
         ),
         body: Navigator(
           initialRoute: '/',
