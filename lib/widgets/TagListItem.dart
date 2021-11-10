@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TagListItem extends StatelessWidget implements PreferredSizeWidget{
-  var tag;
+  late final tag;
   TagListItem(var tag){
     this.tag=tag;
   }

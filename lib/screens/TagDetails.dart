@@ -3,12 +3,9 @@ import 'package:byu_studies/models/Tag.dart';
 import 'package:byu_studies/widgets/ArticleListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:byu_studies/Widgets/BaseAppBar.dart';
-import 'package:flutter_html/flutter_html.dart';
 
-import '../models/Author.dart';
 import '../models/Article.dart';
 import '../fetch_data.dart';
-import 'ArticleDetails.dart';
 
 class TagDetails extends StatelessWidget {
   @override

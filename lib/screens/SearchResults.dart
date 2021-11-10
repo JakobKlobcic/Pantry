@@ -4,8 +4,6 @@ import '../fetch_data.dart';
 import '../models/SearchResult.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-import '../models/Article.dart';
-
 class SearchResults extends StatefulWidget{
   @override
   _SearchResults createState() => _SearchResults();

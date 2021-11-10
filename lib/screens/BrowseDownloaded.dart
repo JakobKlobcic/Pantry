@@ -3,7 +3,6 @@ import 'package:byu_studies/models/Article.dart';
 import 'package:byu_studies/models/RouteArguments.dart';
 import 'package:byu_studies/widgets/ArticleListItem.dart';
 import 'package:flutter/material.dart';
-import 'package:byu_studies/Widgets/BaseAppBar.dart';
 
 class BrowseDownloaded extends StatefulWidget{
   @override

@@ -8,8 +8,8 @@ import '../fetch_data.dart';
 //import 'package:flutter_html/flutter_html.dart';
 
 class ArticleListItem extends StatelessWidget implements PreferredSizeWidget{
-  var article;
-  var download;
+  late final article;
+  late final download;
   ArticleListItem(var article, var download){
     this.article=article;
     this.download=download;

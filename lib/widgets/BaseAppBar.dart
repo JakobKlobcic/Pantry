@@ -15,7 +15,6 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget{
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(titleString),
-      //title: Html(data:titleString),
       automaticallyImplyLeading: false,
       leading: !backButtonBool ? null : BackButton(onPressed: ()=>{Navigator.pop(context)}),
       actions: <Widget>[

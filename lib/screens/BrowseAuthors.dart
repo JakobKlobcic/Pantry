@@ -1,7 +1,6 @@
 import 'package:byu_studies/fetch_data.dart';
 import 'package:byu_studies/models/Author.dart';
 import 'package:byu_studies/models/RouteArguments.dart';
-import 'package:byu_studies/screens/Browse.dart';
 import 'package:byu_studies/widgets/AuthorListItem.dart';
 import 'package:flutter/material.dart';
 
