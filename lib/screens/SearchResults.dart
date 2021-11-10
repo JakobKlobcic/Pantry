@@ -1,9 +1,8 @@
+import 'package:byu_studies/models/RouteArguments.dart';
 import 'package:flutter/material.dart';
 import '../fetch_data.dart';
 import '../models/SearchResult.dart';
 import 'package:flutter_html/flutter_html.dart';
-
-import '../models/Article.dart';
 
 class SearchResults extends StatefulWidget{
   @override
@@ -40,10 +39,12 @@ class _SearchResults extends State<SearchResults> {
                   suffixIcon: IconButton(
                     icon: Icon(Icons.clear),
                     onPressed: () {
-                      setState(() {
-                        _controller.text="";
-                        enteredSearch ="";
-                      });
+                      if(_controller.text!="") {
+                        setState(() {
+                          _controller.text = "";
+                          enteredSearch = "";
+                        });
+                      }
                     },
                   ),
                   hintText: 'Search...',
@@ -84,15 +85,15 @@ class _SearchResults extends State<SearchResults> {
                           onTap: (){
                             if(result.type=="article"){
                               FetchData().fetchSingleArticle(result.id).then((returnedArticle) {
-                                Navigator.pushNamed(context, "/article_detail", arguments:returnedArticle);
+                                Navigator.pushNamed(context, "/article_detail", arguments:Arguments(data:returnedArticle));
                               });
                             }else if(result.type=="author"){
                               FetchData().fetchAuthorDetails(result.id).then((returnedAuthor) {
-                                Navigator.pushNamed(context, "/author_details", arguments:returnedAuthor);
+                                Navigator.pushNamed(context, "/author_details", arguments:Arguments(data:returnedAuthor));
                               });
                             }else if(result.type=="journal"){
                               FetchData().fetchSingleJournal(result.id).then((returnedJournal) {
-                                Navigator.pushNamed(context, "/articles", arguments:returnedJournal);
+                                Navigator.pushNamed(context, "/articles", arguments:Arguments(data:returnedJournal));
                               });
                             }
                           },
@@ -102,7 +103,7 @@ class _SearchResults extends State<SearchResults> {
                   ),
                 );
               },
-              future: FetchData().fetchSearchResults(enteredSearch),
+              future: FetchData().fetchSearchResultsList(enteredSearch),
             )
           )
         ]

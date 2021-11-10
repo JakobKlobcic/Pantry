@@ -1,4 +1,6 @@
+import 'package:byu_studies/models/RouteArguments.dart';
 import 'package:byu_studies/screens/Browse.dart';
+import 'package:byu_studies/screens/TagDetails.dart';
 import 'package:flutter/material.dart';
 import 'screens/Home.dart';
 import 'screens/Journals.dart';
@@ -23,78 +25,80 @@ class _Shell extends State<Shell> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Navigator(
-          initialRoute: '/',
-          key: _navigatorKey,
-          onGenerateRoute: (RouteSettings settings) {
-            WidgetBuilder builder;
-            var back=false;
-            switch (settings.name) {
-              case '/':
-                back=false;
-                builder = (BuildContext context) =>  Home();
-                break;
-              case '/journals':
-                back=false;
-                builder = (BuildContext context) => Journals();
-                break;
-              case '/browse':
-                back=false;
-                builder = (BuildContext context) =>  Browse();
-                break;
-              case '/articles':
-                back=true;
-                builder = (BuildContext context) => Articles();
-                break;
-              case '/article_detail':
-                back=true;
-                builder = (BuildContext context) => ArticleDetail();
-                break;
-              case '/search_results':
-                back=true;
-                builder = (BuildContext context) => SearchResults();
-                break;
-              case '/author_details':
-                back=true;
-                builder = (BuildContext context) => AuthorDetails();
-                break;
-              default:
-                throw Exception('Invalid route: ${settings.name}');
-            }
-            if(!firstBuild){
-              setState(() {
-                needsBackButton=back;
-              });
-            }
-            firstBuild=false;
-            return MaterialPageRoute<void>(builder: builder, settings: settings);
-          },
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.book),
-              label: 'All Journals',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.manage_search),
-              label: 'Browse',
-            ),
-          ],
+      body: Navigator(
+        initialRoute: '/',
+        key: _navigatorKey,
+        onGenerateRoute: (RouteSettings settings) {
+          WidgetBuilder builder;
+          var back=false;
+          switch (settings.name) {
+            case '/':
+              back=false;
+              builder = (BuildContext context) =>  Home();
+              break;
+            case '/journals':
+              back=false;
+              builder = (BuildContext context) => Journals();
+              break;
+            case '/browse':
+              back=false;
+              builder = (BuildContext context) =>  Browse();
+              break;
+            case '/articles':
+              back=true;
+              builder = (BuildContext context) => Articles();
+              break;
+            case '/article_detail':
+              back=true;
+              builder = (BuildContext context) => ArticleDetails();
+              break;
+            case '/search_results':
+              back=true;
+              builder = (BuildContext context) => SearchResults();
+              break;
+            case '/author_details':
+              back=true;
+              builder = (BuildContext context) => AuthorDetails();
+              break;
+            case '/tag_details':
+              back=true;
+              builder = (BuildContext context) => TagDetails();
+              break;
+            default:
+              throw Exception('Invalid route: ${settings.name}');
+          }
+          if(!firstBuild){
+            setState(() {
+              needsBackButton=back;
+            });
+          }
+          firstBuild=false;
+          return MaterialPageRoute<void>(builder: builder, settings: settings);
+        },
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label: 'All Journals',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.manage_search),
+            label: 'Browse',
+          ),
+        ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: (int index){
           if(index!=_selectedIndex) {
             setState(() {
-              print(index.toString() + _selectedIndex.toString());
-
               _selectedIndex = index;
               _navigatorKey.currentState!.pushNamed(
-                  _widgetOptions[_selectedIndex]
+                  _widgetOptions[_selectedIndex], arguments: new Arguments(key:_navigatorKey)
               );
             });
           }
@@ -108,7 +112,5 @@ class _Shell extends State<Shell> {
     setState(() {
       needsBackButton=backButton;
     });
-  }
-  void backButton(Function f){
   }
 }
