@@ -1,10 +1,18 @@
 import 'package:byu_studies/fetch_data.dart';
 import 'package:byu_studies/models/Author.dart';
 import 'package:byu_studies/models/RouteArguments.dart';
+import 'package:byu_studies/screens/Browse.dart';
 import 'package:byu_studies/widgets/AuthorListItem.dart';
 import 'package:flutter/material.dart';
 
-class BrowseAuthors extends StatelessWidget {
+class BrowseAuthors extends StatefulWidget{
+  @override
+  _BrowseAuthors createState() => _BrowseAuthors();
+}
+
+class _BrowseAuthors extends State<BrowseAuthors> {
+  var enteredSearch ="";
+  final TextEditingController _controller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     Arguments args = ModalRoute.of(context)!.settings.arguments as Arguments;
@@ -12,6 +20,30 @@ class BrowseAuthors extends StatelessWidget {
     return Scaffold(
       body: Column(
         children:[
+          TextField(
+            onChanged: (text){
+              setState(() {
+                enteredSearch = text;
+              });
+            },
+            controller: _controller,
+            decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    if(_controller.text!="") {
+                      setState(() {
+                        _controller.text = "";
+                        enteredSearch = "";
+                      });
+                    }
+                  },
+                ),
+                hintText: 'Search...',
+                border: InputBorder.none
+            ),
+          ),
           Expanded(child:
           FutureBuilder(
             builder: (context, projectSnap) {
@@ -38,7 +70,7 @@ class BrowseAuthors extends StatelessWidget {
                 ),
               );
             },
-            future: FetchData().fetchAuthorList(""),
+            future: FetchData().fetchAuthorList(enteredSearch),
           )
           )
         ]

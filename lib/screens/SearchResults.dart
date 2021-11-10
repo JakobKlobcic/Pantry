@@ -41,10 +41,12 @@ class _SearchResults extends State<SearchResults> {
                   suffixIcon: IconButton(
                     icon: Icon(Icons.clear),
                     onPressed: () {
-                      setState(() {
-                        _controller.text="";
-                        enteredSearch ="";
-                      });
+                      if(_controller.text!="") {
+                        setState(() {
+                          _controller.text = "";
+                          enteredSearch = "";
+                        });
+                      }
                     },
                   ),
                   hintText: 'Search...',

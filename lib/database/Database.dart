@@ -64,9 +64,10 @@ class DBProvider{
     print(res);
   }
 
-  Future <List<Article>> getArticle() async{
+  Future <List<Article>> getArticle(var searchString) async{
     final db = await database;
-    var res = await db.query('articles');
+    var res = await db.rawQuery('Select * FROM articles WHERE  title LIKE "%'+searchString+'%"');
+    //var res = await db.query('articles');
     List<Article> articles =[];
     if(res.length==0){
       return articles;

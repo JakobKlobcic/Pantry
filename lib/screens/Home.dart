@@ -30,7 +30,7 @@ class Home extends StatelessWidget {
                 authorList: "1234,4567",
                 articleJournal: 44526
               ))*/
-              print(DBProvider.db.getArticle())
+              print(DBProvider.db.getArticle(""))
               //DBProvider.db.deleteArticle(37192)
               /*
               FetchData().fetchJournalList().then((result) {

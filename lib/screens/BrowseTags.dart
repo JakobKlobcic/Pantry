@@ -4,7 +4,14 @@ import 'package:byu_studies/models/Tag.dart';
 import 'package:byu_studies/widgets/TagListItem.dart';
 import 'package:flutter/material.dart';
 
-class BrowseTags extends StatelessWidget {
+class BrowseTags extends StatefulWidget{
+  @override
+  _BrowseTags createState() => _BrowseTags();
+}
+
+class _BrowseTags extends State<BrowseTags> {
+  var enteredSearch ="";
+  final TextEditingController _controller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     Arguments args = ModalRoute.of(context)!.settings.arguments as Arguments;
@@ -12,6 +19,30 @@ class BrowseTags extends StatelessWidget {
     return Scaffold(
         body: Column(
             children:[
+              TextField(
+                onChanged: (text){
+                  setState(() {
+                    enteredSearch = text;
+                  });
+                },
+                controller: _controller,
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        if(_controller.text!="") {
+                          setState(() {
+                            _controller.text = "";
+                            enteredSearch = "";
+                          });
+                        }
+                      },
+                    ),
+                    hintText: 'Search...',
+                    border: InputBorder.none
+                ),
+              ),
               Expanded(child:
               FutureBuilder(
                 builder: (context, projectSnap) {
@@ -37,7 +68,7 @@ class BrowseTags extends StatelessWidget {
                     ),
                   );
                 },
-                future: FetchData().fetchTagList(""),
+                future: FetchData().fetchTagList(enteredSearch),
               )
               )
             ]

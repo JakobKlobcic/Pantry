@@ -5,38 +5,47 @@ import 'package:byu_studies/widgets/ArticleListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:byu_studies/Widgets/BaseAppBar.dart';
 
-class BrowseDownloaded extends StatelessWidget {
+class BrowseDownloaded extends StatefulWidget{
+  @override
+  _BrowseDownloaded createState() => _BrowseDownloaded();
+}
+
+class _BrowseDownloaded extends State<BrowseDownloaded> {
+  var enteredSearch ="";
+  final TextEditingController _controller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     var mainNavKey;
     if (ModalRoute.of(context)!.settings.arguments != null) {
-    Arguments args = ModalRoute.of(context)!.settings.arguments as Arguments;
-    mainNavKey = args.key;
+      Arguments args = ModalRoute.of(context)!.settings.arguments as Arguments;
+      mainNavKey = args.key;
     }
     return Scaffold(
       body: Column(children: [
-        /*TextField(
-              onChanged: (text){
-                setState(() {
-                  enteredSearch = text;
-                });
+        TextField(
+          onChanged: (text){
+            setState(() {
+              enteredSearch = text;
+            });
+          },
+          controller: _controller,
+          decoration: InputDecoration(
+            prefixIcon: Icon(Icons.search),
+            suffixIcon: IconButton(
+              icon: Icon(Icons.clear),
+              onPressed: () {
+                if(_controller.text!="") {
+                  setState(() {
+                    _controller.text = "";
+                    enteredSearch = "";
+                  });
+                }
               },
-              controller: _controller,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: () {
-                    setState(() {
-                      _controller.text="";
-                      enteredSearch ="";
-                    });
-                  },
-                ),
-                hintText: 'Search...',
-                border: InputBorder.none
-              ),
-            ),*/
+            ),
+            hintText: 'Search...',
+            border: InputBorder.none
+          ),
+        ),
         Expanded(child:
           FutureBuilder(
             builder: (context, projectSnap) {
@@ -62,7 +71,7 @@ class BrowseDownloaded extends StatelessWidget {
                 ),
               );
             },
-            future: DBProvider.db.getArticle(),
+            future: DBProvider.db.getArticle(enteredSearch),
           )
         )
       ],
