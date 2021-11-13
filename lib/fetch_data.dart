@@ -73,7 +73,7 @@ class FetchData {
   }
 
   //Article---------------------------------------------------------------------
-  Future<List<Article>> fetchArticleList(var journalId) async {
+  Future<List<Article>> fetchJournalArticleList(var journalId) async {
     // take journalId and get al articles associated with it.
     var url = Uri.parse(
         'https://byustudies.byu.edu/byu-app-connection/get_article_list.php');
@@ -83,9 +83,9 @@ class FetchData {
     //var data = json.decode(response.body).cast<Map<String, dynamic>>();
     List<Article> articles = [];
     List<Author> authors = [];
-    data.forEach((singleArticle)=>{
+    data.forEach((singleArticle){
       //print(singleArticle["title"]);
-      authors = [],
+      authors = [];
       singleArticle["authors"].forEach((author){
         authors.add(
             new Author(
@@ -94,15 +94,16 @@ class FetchData {
             )
         );
       }
-      ),
+      );
       articles.add(new Article(
           id: singleArticle["id"],
           type: singleArticle["type"],
           title: singleArticle["title"],
           subtitle: singleArticle["subtitle"],
           authorList: authors,
-          articleJournal: singleArticle['articleJournal']
-      )),
+          articleJournal: singleArticle['articleJournal'],
+          pageNumber: singleArticle["page_number"]
+      ));
     });
     return articles;
     /*Data Structure

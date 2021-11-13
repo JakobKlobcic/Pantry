@@ -6,6 +6,7 @@ class Article {
   var authorList;
   var articleJournal;
   var content;
+  var pageNumber;
 
   Article({
     this.id,
@@ -14,7 +15,8 @@ class Article {
     this.type,
     this.authorList,
     this.articleJournal,
-    this.content
+    this.content,
+    this.pageNumber
   });
 
   void printArticle(){
