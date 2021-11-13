@@ -56,11 +56,8 @@ class Articles extends StatelessWidget {
                       elements: data,
                       groupBy: (Article article) => article.type,
                       groupSeparatorBuilder: (String groupByValue) => Text(groupByValue),
-                      groupComparator: (value1, value2){
-                        var val1Index = list.indexOf(value1);
-                        var val2Index = list.indexOf(value2);
-                        return val1Index.compareTo(val2Index);
-                      },
+                      itemComparator: (item1, item2) => int.parse(item1.pageNumber).compareTo(int.parse(item2.pageNumber)),
+                      groupComparator: (value1, value2) => list.indexOf(value1).compareTo(list.indexOf(value2)),
                       itemBuilder: (context, article) {
                         return new InkResponse(
                           child:ArticleListItem(article, true),
@@ -76,7 +73,7 @@ class Articles extends StatelessWidget {
                   ),
                 );
               },
-              future: FetchData().fetchArticleList(journal.id),
+              future: FetchData().fetchJournalArticleList(journal.id),
             )
           )
         ]
