@@ -1,5 +1,6 @@
 import 'package:byu_studies/Widgets/BaseAppBar.dart';
 import 'package:byu_studies/models/RouteArguments.dart';
+import 'package:byu_studies/widgets/JournalListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../fetch_data.dart';
@@ -42,7 +43,7 @@ class Journals extends StatelessWidget {
                       itemBuilder: (context, index) {
                         Journal journal = data[index];
                         return new InkResponse(
-                          child:listItem(journal),
+                          child:JournalListItem(journal),
                           onTap: ()=>{onItemTap(context, journal)},);
                       },
                     )
@@ -52,18 +53,6 @@ class Journals extends StatelessWidget {
           );
       },
       future: FetchData().fetchJournalList(),
-    );
-  }
-
-  Widget listItem(Journal journal){
-    return GridTile(
-      child: FittedBox(
-          child:Image.network(journal.image_url),
-          fit:BoxFit.fill),
-      footer: GridTileBar(
-        backgroundColor: Color(0xAA000000),
-        title:Center( child: Text(journal.title, style: TextStyle(color: Colors.white),),),
-      ),
     );
   }
 
