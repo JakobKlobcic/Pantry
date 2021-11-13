@@ -26,6 +26,7 @@ dependencies:
   flutter:
     sdk: flutter
   sqflite: ^2.0.0+3
+  grouped_list: ^4.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
