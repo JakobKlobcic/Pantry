@@ -8,7 +8,7 @@ class Journal {
     this.id,
     this.title,
     this.image_id,
-    this.image_url
+    this.image_url,
   });
 
 

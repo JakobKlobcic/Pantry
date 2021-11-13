@@ -27,7 +27,7 @@ class FetchData {
             id: singleJournal["id"],
             title: singleJournal["title"],
             image_id: singleJournal["image_id"],
-            image_url: singleJournal["image_url"]))
+            image_url: singleJournal["image_url"],))
       });
     }on SocketException{
       print('No Internet connection');
@@ -272,7 +272,13 @@ class FetchData {
     return author;
   }
 
-
-
+  //image
+  Future <String> getEncodedImage(var imageUrl) async{
+    var url = Uri.parse(
+        'https://byustudies.byu.edu/byu-app-connection/get_image.php');
+    http.Response response =await http.post(url, body: <String, String>{'imageUrl': imageUrl});
+    var data = jsonDecode(response.body);
+    return data["encoded_image"];
+  }
 
 }
