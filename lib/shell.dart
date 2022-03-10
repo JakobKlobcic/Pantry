@@ -1,13 +1,12 @@
-import 'package:byu_studies/models/RouteArguments.dart';
-import 'package:byu_studies/screens/Browse.dart';
-import 'package:byu_studies/screens/TagDetails.dart';
+
+import 'package:byu_studies/screens/RecepiesDetails.dart';
 import 'package:flutter/material.dart';
+import 'models/RouteArguments.dart';
+import 'screens/AddFoods.dart';
+import 'screens/AddToCart.dart';
 import 'screens/Home.dart';
-import 'screens/Journals.dart';
-import 'screens/Articles.dart';
-import 'screens/ArticleDetails.dart';
-import 'screens/SearchResults.dart';
-import 'screens/AuthorDetails.dart';
+import 'screens/Recepies.dart';
+import 'screens/ShoppingList.dart';
 
 class Shell extends StatefulWidget {
   @override
@@ -18,8 +17,8 @@ class _Shell extends State<Shell> {
   int _selectedIndex = 0;
   //first build gets set to false as soon as widget is built and stays false-- meant to prevent error when first building and setting a state TODO:should probably find a better solution
   var firstBuild = true;
-
-  List<String> _widgetOptions =["/","/journals","/browse"];
+  //TODO: Browse --> Explore
+  List<String> _widgetOptions =["/","/recepies","/shoppingList"];
   bool needsBackButton = false;
 
   @override
@@ -36,33 +35,25 @@ class _Shell extends State<Shell> {
               back=false;
               builder = (BuildContext context) =>  Home();
               break;
-            case '/journals':
+            case '/addFoods':
               back=false;
-              builder = (BuildContext context) => Journals();
+              builder = (BuildContext context) => AddFoods();
               break;
-            case '/browse':
+            case '/addToCart':
               back=false;
-              builder = (BuildContext context) =>  Browse();
+              builder = (BuildContext context) => AddToCart();
               break;
-            case '/articles':
-              back=true;
-              builder = (BuildContext context) => Articles();
+            case '/recepies':
+              back=false;
+              builder = (BuildContext context) => Recepies();
               break;
-            case '/article_detail':
-              back=true;
-              builder = (BuildContext context) => ArticleDetails();
+            case '/recepieDetails':
+              back=false;
+              builder = (BuildContext context) => RecepieDetails();
               break;
-            case '/search_results':
-              back=true;
-              builder = (BuildContext context) => SearchResults();
-              break;
-            case '/author_details':
-              back=true;
-              builder = (BuildContext context) => AuthorDetails();
-              break;
-            case '/tag_details':
-              back=true;
-              builder = (BuildContext context) => TagDetails();
+            case '/shoppingList':
+              back=false;
+              builder = (BuildContext context) =>  ShoppingList();
               break;
             default:
               throw Exception('Invalid route: ${settings.name}');
@@ -79,20 +70,21 @@ class _Shell extends State<Shell> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.home_filled),
+            label: 'Pantry',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: 'All Journals',
+            icon: Icon(Icons.blender),
+            label: 'Recepies',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.manage_search),
-            label: 'Browse',
+            icon: Icon(Icons.local_grocery_store),
+            label: 'Shopping List',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        //#7ED957
+        selectedItemColor:Color(0xff7ED957),
         onTap: (int index){
           if(index!=_selectedIndex) {
             setState(() {

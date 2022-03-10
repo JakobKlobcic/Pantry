@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "520478635818",
+    "project_id": "pantry-baefa",
+    "storage_bucket": "pantry-baefa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520478635818:android:5bd29f6ba4472a27361053",
+        "android_client_info": {
+          "package_name": "com.byu.studies.byu_studies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520478635818-m02469ps3iv43rlaanc6miststmgdbtj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3xCKhXrtBLamc08ECqlShLH6_edlze8Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "520478635818-m02469ps3iv43rlaanc6miststmgdbtj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

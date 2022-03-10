@@ -1,15 +1,58 @@
 import 'package:flutter/material.dart';
 import 'shell.dart';
 import 'theme/byu_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(App());
+void main(){
+WidgetsFlutterBinding.ensureInitialized();
+runApp(App());
+}
 
-class App extends StatelessWidget {
+class App extends StatefulWidget{
+  @override
+  _App createState() => _App();
+}
+class _App extends State<App> {
+  // Set default `_initialized` and `_error` state to false
+  bool _initialized = false;
+  bool _error = false;
+
+  // Define an async function to initialize FlutterFire
+  void initializeFlutterFire() async {
+    try {
+      // Wait for Firebase to initialize and set `_initialized` state to true
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch(e) {
+      // Set `_error` state to true if Firebase initialization fails
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    initializeFlutterFire();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    Widget widget = Shell();
+    // Show error message if initialization failed
+    if(_error) {
+      widget= Text("Problem");
+    }
+
+    // Show a loader until FlutterFire is initialized
+    if (!_initialized) {
+      widget= Center(child: new CircularProgressIndicator());
+    }
     return MaterialApp(
-      home: Shell(),
-      theme: BYUTheme.byuTheme,
+      home: widget,
     );
   }
 }
